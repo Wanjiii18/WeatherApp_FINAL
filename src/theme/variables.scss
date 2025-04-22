@@ -1,0 +1,39 @@
+:root {
+  --ion-background-color: #ffffff; /* Light mode background */
+  --ion-text-color: #000000; /* Text color remains consistent */
+  --ion-icon-color: #000000; /* Icon color remains consistent */
+  --ion-primary-color: #3880ff; /* Primary color remains consistent */
+  --ion-secondary-color: #3dc2ff; /* Secondary color remains consistent */
+}
+
+:root.dark {
+  --ion-background-color: #121212; /* Dark mode background */
+  /* Text, icon, and other colors remain unchanged */
+}
+
+body {
+  background-color: var(--ion-background-color);
+}
+
+ion-content {
+  background-color: var(--ion-background-color);
+}
+
+ion-toolbar {
+  background-color: var(--ion-background-color);
+}
+
+.weather-card {
+  background-color: var(--ion-background-color);
+  border: 1px solid var(--ion-text-color); /* Keep border color consistent */
+}
+
+.weather-table th,
+.weather-table td {
+  color: var(--ion-text-color); /* Text color remains consistent */
+}
+
+/* Icon Styling */
+ion-icon {
+  color: var(--ion-icon-color); /* Icon color remains consistent */
+}

@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Offline Mode</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="cachedWeather; else noData">
+    <h2>Current Weather</h2>
+    <p><strong>Location:</strong> {{ cachedWeather.name }}</p>
+    <p *ngIf="offlineStartTime" class="offline-mode">
+      Offline Mode ({{ offlineDuration }} minutes offline)
+    </p>
+    <p><strong>Temperature:</strong> {{ cachedWeather.main.temp }}°</p>
+    <p><strong>Condition:</strong> {{ cachedWeather.weather[0].description }}</p>
+    <p><strong>Humidity:</strong> {{ cachedWeather.main.humidity }}%</p>
+    <p><strong>Wind Speed:</strong> {{ cachedWeather.wind.speed }} m/s</p>
+  </div>
+
+  <div *ngIf="cachedForecast.length > 0">
+    <h2>Hourly Forecast</h2>
+    <div *ngFor="let item of cachedForecast">
+      <h3>{{ item.time }}</h3>
+      <p><strong>Temperature:</strong> {{ item.temp }}°</p>
+      <p><strong>Condition:</strong> {{ item.condition }}</p>
+    </div>
+  </div>
+
+  <div *ngIf="cachedForecast.length > 0">
+    <h2>5-Day Forecast</h2>
+    <div *ngFor="let item of cachedForecast">
+      <h3>{{ item.day }}</h3>
+      <p><strong>Temperature:</strong> {{ item.main.temp }}°</p>
+      <p><strong>Condition:</strong> {{ item.weather[0].description }}</p>
+    </div>
+  </div>
+
+  <ng-template #noData>
+    <p>No cached data available. Please go online to fetch weather data.</p>
+  </ng-template>
+</ion-content>

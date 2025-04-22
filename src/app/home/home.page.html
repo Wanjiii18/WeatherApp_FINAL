@@ -1,0 +1,114 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="end">
+      <ion-button routerLink="/settings" color="light">
+        <ion-icon name="settings-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ locationName }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<div *ngIf="isOffline" class="offline-banner">
+  <p>You are offline. {{ offlineDuration }}</p>
+</div>
+
+<ion-content class="ion-padding">
+  <!-- Search Section -->
+  <div class="search-container">
+    <ion-input [(ngModel)]="cityName" placeholder="  Enter city name"></ion-input>
+    <ion-button expand="block" (click)="getWeatherDataByCity(cityName)" color="secondary">
+      Get Weather
+    </ion-button>
+  </div>
+
+  <!-- Current Weather Details -->
+  <div *ngIf="temperature !== null" class="weather-card">
+    <h3>Current Weather ({{ currentDate }})</h3>
+    <img *ngIf="weatherIcon" [src]="weatherIcon" alt="Weather Icon">
+    <div class="table-container">
+      <table class="weather-table">
+        <tr>
+          <th>Temperature</th>
+          <td>
+            <ion-icon name="water-outline" class="temperature-icon"></ion-icon>
+            <span [ngClass]="getTemperatureClass(temperature)">{{ temperature }}°</span>
+          </td>
+        </tr>
+        <tr>
+          <th>Condition</th>
+          <td>{{ weatherDescription }}</td>
+        </tr>
+        <tr>
+          <th>Humidity</th>
+          <td>{{ humidity }}%</td>
+        </tr>
+        <tr>
+          <th>Wind Speed</th>
+          <td>{{ windSpeed }} {{ temperatureUnit === 'metric' ? 'm/s' : 'mph' }}</td>
+        </tr>
+        <tr>
+          <th>Chance of Rain</th>
+          <td>{{ chanceOfRain }}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="current-time">
+    <p>Current Time: {{ currentTime }}</p>
+  </div>
+<div *ngIf="hourlyForecast.length > 0" class="hourly-updates-container">
+  <h3>Hourly Updates</h3>
+  <div class="hourly-updates">
+    <div *ngFor="let hour of hourlyForecast" class="hourly-card">
+      <h4>{{ hour.time }}</h4>
+      <img [src]="hour.icon" alt="Weather Icon">
+      <p><strong>Temp:</strong> {{ hour.temp }}°</p>
+      <p><strong>Condition:</strong> {{ hour.condition }}</p>
+    </div>
+  </div>
+</div>
+
+  <!-- Error Message -->
+  <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+
+  <!-- Offline Message -->
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <!-- 5-Day Forecast -->
+  <div *ngIf="forecast.length > 0" class="forecast-container">
+    <h3>5-Day Forecast</h3>
+    <div *ngFor="let item of forecast" class="forecast-card">
+      <h4>{{ item.day }}</h4>
+      <img [src]="'https://openweathermap.org/img/wn/' + item.weather[0].icon + '@2x.png'" alt="Weather Icon">
+      <div class="table-container">
+        <table class="weather-table">
+          <tr>
+            <th>Temperature</th>
+            <td>
+              <ion-icon name="water-outline" class="temperature-icon"></ion-icon>
+              <span [ngClass]="getTemperatureClass(item.main.temp)">{{ item.main.temp }}°</span>
+            </td>
+          </tr>
+          <tr>
+            <th>Condition</th>
+            <td>{{ item.weather[0].description }}</td>
+          </tr>
+          <tr>
+            <th>Humidity</th>
+            <td>{{ item.main.humidity }}%</td>
+          </tr>
+          <tr>
+            <th>Wind Speed</th>
+            <td>{{ item.wind.speed }} {{ temperatureUnit === 'metric' ? 'm/s' : 'mph' }}</td>
+          </tr>
+          <tr>
+            <th>Chance of Rain</th>
+            <td>{{ item.rain?.['3h'] ? item.rain['3h'] + ' mm' : 'No rain data available' }}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</ion-content>

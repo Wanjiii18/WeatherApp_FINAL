@@ -1,0 +1,269 @@
+/* filepath: c:\Users\ACER NITRO AN515-52\Documents\Mobile\weatherApp\src\app\home\home.page.scss */
+
+/* Toolbar Styling */
+ion-toolbar {
+  --background: var(--ion-background-color); /* Dynamic background color */
+  --color: var(--ion-text-color); /* Dynamic text color */
+}
+
+/* Search Container */
+.search-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #ffffff; /* Keep the container background white */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-container ion-input {
+  width: 100%;
+  --background: #949494; /* Set the input background to black */
+  --color: #ffffff; /* Set the input text color to white */
+  --placeholder-color: #ffffff; /* Set the placeholder text color to white */
+  --highlight-color-focused: #000000; /* Set the underline color to black when focused */
+  --highlight-color: #000000; /* Set the underline color to black */
+}
+
+
+.search-container ion-button {
+  width: 100%;
+}x
+
+/* Weather Card */
+.weather-card,
+.forecast-card {
+  background-color: var(--background); /* Dynamic background for light/dark mode */
+  color: var(--text-color); /* Dynamic text color */
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px; /* Add spacing between cards */
+}
+
+/* Weather Table */
+.weather-table {
+  width: 100%; /* Full width */
+  border-collapse: collapse; /* Remove spacing between cells */
+  margin-top: 10px;
+  table-layout: fixed; /* Enforce equal column widths */
+}
+
+.weather-table th,
+.weather-table td {
+  text-align: left; /* Align text to the left */
+  padding: 10px; /* Add padding for better spacing */
+  border: 1px solid #ddd; /* Add a border to table cells */
+  word-wrap: break-word; /* Prevent long text from overflowing */
+}
+
+.weather-table th {
+  background-color: #f4f4f4; /* Light gray background for headers */
+  font-weight: bold;
+  color: var(--text-color); /* Dynamic text color */
+}
+
+.weather-table td {
+  background-color: var(--background); /* Dynamic background for light/dark mode */
+  color: var(--text-color); /* Dynamic text color */
+}
+
+/* Error Message */
+.error {
+  color: red;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.error-message {
+  color: red;
+  font-size: 1.2em;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Temperature Classes */
+.temperature-icon {
+  margin-right: 5px;
+  color: #007bff; /* Default color for the water icon */
+}
+
+.temperature-low {
+  color: #800080; /* Purple for ≤0° */
+}
+
+.temperature-cool {
+  color: #0000ff; /* Blue for 1°–10° */
+}
+
+.temperature-mild {
+  color: #00bfff; /* Light blue for 11°–20° */
+}
+
+.temperature-warm {
+  color: #00ff00; /* Green for 21°–30° */
+}
+
+.temperature-hot {
+  color: #ffa500; /* Orange for 31°–40° */
+}
+
+.temperature-very-hot {
+  color: #ff4500; /* Red for ≥41° */
+}
+
+body {
+  --background: #ffffff; /* Set background color to white for light mode */
+  --text-color: #000000; /* Set text color to black for light mode */
+}
+
+body.dark {
+  --background: #121212; /* Dark mode background */
+  --text-color: #ffffff; /* Dark mode text color */
+  --text-background: #2e2e2e; /* Dark mode text background */
+}
+
+body.dark .weather-card,
+body.dark .forecast-card {
+  background-color: var(--text-background); /* Dark background for cards */
+  color: var(--text-color); /* Light text for dark mode */
+}
+body.dark .table-container {
+  background-color: var(--text-background); /* Dark background for table container */
+  color: var(--text-color); /* Light text for dark mode */
+}
+
+body.dark .weather-table th {
+  background-color: #2e2e2e; /* Slightly lighter dark background for table headers */
+  color: #ffffff; /* Light text for headers */
+}
+
+body.dark .weather-table td {
+  background-color: var(--text-background); /* Dark background for table cells */
+  color: #ffffff; /* Light text for table cells */
+}
+
+
+ion-content {
+  background: var(--background); /* Dynamic background */
+  color: var(--text-color); /* Dynamic text color */
+}
+
+ion-item {
+  color: var(--text-color); /* Dynamic text color */
+  background-color: var(--text-background); /* Dynamic background for dark mode */
+}
+
+/* Current Weather Section */
+.current-weather {
+  color: var(--text-color); /* Dynamic text color */
+  background-color: var(--text-background); /* Dynamic background for dark mode */
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.current-weather .temperature,
+.current-weather .description,
+.current-weather .weather-details th,
+.current-weather .weather-details td {
+  color: var(--text-color); /* Dynamic text color */
+  background-color: var(--text-background); /* Dynamic background for dark mode */
+  padding: 5px;
+  border-radius: 4px;
+}
+
+/* Other Elements */
+.other-elements {
+  color: var(--text-color); /* Apply white font color for other elements in dark mode */
+}
+
+/* Horizontal scrolling container */
+.hourly-container {
+  background-color: #ffffff; /* Light background */
+  color: #000000; /* Dark text */
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.hourly-updates {
+  display: flex;
+  overflow-x: auto; /* Enable horizontal scrolling */
+  gap: 10px; /* Add spacing between cards */
+  padding: 10px;
+  scroll-snap-type: x mandatory; /* Smooth scrolling */
+}
+
+.hourly-card {
+  flex: 0 0 auto; /* Prevent cards from shrinking */
+  width: 120px; /* Set a fixed width for each card */
+  background-color: #ffffff; /* Light background */
+  color: #000000; /* Dark text */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 10px;
+  scroll-snap-align: start; /* Align cards to the start of the container */
+}
+
+.hourly-card img {
+  width: 50px;
+  height: 50px;
+  margin: 5px auto;
+}
+.table-container {
+  background-color: var(--background); /* Dynamic background for light/dark mode */
+  color: var(--text-color); /* Dynamic text color */
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Ensure table styles are consistent */
+.table-container .weather-table th {
+  background-color: #f4f4f4; /* Light gray for table headers */
+  color: #000000; /* Dark text for headers */
+}
+
+.table-container .weather-table td {
+  background-color: #ffffff; /* White background for table cells */
+  color: #000000; /* Dark text for table cells */
+}
+
+.forecast-container {
+  background-color: #ffffff; /* Light background for the entire forecast container */
+  color: #000000; /* Dark text */
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px; /* Add spacing between forecast cards */
+}
+
+.forecast-details {
+  background-color: #ffffff; /* Light background for forecast details */
+  color: #000000; /* Dark text */
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.forecast-details .weather-table th {
+  background-color: #f4f4f4; /* Light gray for table headers */
+  color: #000000; /* Dark text for headers */
+}
+
+.forecast-details .weather-table td {
+  background-color: #ffffff; /* White background for table cells */
+  color: #000000; /* Dark text for table cells */
+}
+.offline-banner {
+  background-color: #ffcc00; /* Yellow background for offline notification */
+  color: #000000; /* Black text for contrast */
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+  border-bottom: 2px solid #ffa500; /* Slightly darker yellow border */
+}

@@ -1,0 +1,86 @@
+@use './theme/variables.scss' as *;
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/* Light Mode Variables */
+:root {
+  --ion-background-color: #ffffff; /* Light mode background */
+  --ion-text-color: #000000; /* Black text for light mode */
+  --ion-surface-color: #f4f4f4; /* Light surface background */
+  --ion-icon-color: #000000; /* Black icons for light mode */
+}
+
+/* Dark Mode Variables */
+:root.dark {
+  --ion-background-color: #121212; /* Dark mode background */
+  --ion-text-color: #ffffff; /* White text for dark mode */
+  --ion-surface-color: #1e1e1e; /* Dark surface background */
+  --ion-icon-color: #ffffff; /* White icons for dark mode */
+}
+
+/* Body Styles */
+body {
+  background-color: var(--ion-background-color);
+  color: var(--ion-text-color);
+}
+
+/* Dark Mode Styles */
+body.dark {
+  --ion-background-color: #121212; /* Dark mode background */
+  --ion-text-color: #ffffff; /* Light text color */
+}
+
+/* Table and Forecast Styles */
+body.dark .table-container,
+body.dark .forecast-container,
+body.dark .forecast-container .weather-card {
+  background-color: var(--ion-surface-color); /* Dark surface background */
+  color: var(--ion-text-color); /* Light text for dark mode */
+}
+
+body.dark .weather-table th {
+  background-color: #2e2e2e; /* Slightly lighter dark background for table headers */
+  color: var(--ion-text-color); /* Light text for headers */
+}
+
+body.dark .weather-table td {
+  background-color: var(--ion-surface-color); /* Dark background for table cells */
+  color: var(--ion-text-color); /* Light text for table cells */
+}
+
+/* Forecast Section */
+body.dark .forecast-container,
+body.dark .forecast-container .forecast-details {
+  background-color: var(--ion-surface-color); /* Dark surface background */
+  color: var(--ion-text-color); /* Light text for dark mode */
+}
+
+/* Ion Content and Toolbar */
+ion-content {
+  background-color: var(--ion-background-color);
+  color: var(--ion-text-color);
+}
+
+ion-toolbar {
+  background-color: var(--ion-background-color);
+  color: var(--ion-text-color);
+}
+
+/* Icon Styling */
+ion-icon {
+  color: var(--ion-icon-color); /* Dynamically set icon color */
+}
