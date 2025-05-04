@@ -33,6 +33,7 @@ export class HomePage implements OnInit {
   isOffline: boolean = false;
   offlineStartTime: number | null = null;
   offlineDuration: string = '';
+  flagUrl: string = ''; 
 
   currentDate: string = '';
   private apiKey = environment.apiKey;
@@ -323,60 +324,76 @@ export class HomePage implements OnInit {
   }
 
   processForecastData(data: any[]): any[] {
-    const groupedForecast: any = {};
-    const today = new Date().toLocaleDateString('en-US', { weekday: 'long' });
-
-    data.forEach((item) => {
-      const date = new Date(item.dt_txt).toLocaleDateString('en-US', { weekday: 'long' });
-      if (date === today && !this.todayWeather) {
-        this.todayWeather = {
-          day: date,
-          temp: item.main.temp,
-          condition: item.weather[0].description,
-          icon: `https://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`,
-        };
-      } else if (!groupedForecast[date]) {
-        groupedForecast[date] = item;
-      }
+    if (!data || data.length === 0) {
+      return [];
+    }
+  
+    const now = new Date();
+    const today = now.toISOString().split('T')[0];
+  
+    // Filter out the current day and start from the next day
+    const filteredData = data.filter((item) => {
+      const forecastDate = item.dt_txt.split(' ')[0];
+      return forecastDate > today; // Include only dates after today
     });
-
-    return Object.keys(groupedForecast).map((day) => ({
-      day,
-      ...groupedForecast[day],
+  
+    // Limit the forecast to 5 days
+    const uniqueDays = new Set();
+    const fiveDayForecast = filteredData.filter((item) => {
+      const day = new Date(item.dt_txt).toLocaleDateString('en-US', { weekday: 'long' });
+      if (!uniqueDays.has(day)) {
+        uniqueDays.add(day);
+        return true;
+      }
+      return false;
+    });
+  
+    // Map the filtered data to the desired format
+    return fiveDayForecast.slice(0, 5).map((item) => ({
+      day: new Date(item.dt_txt).toLocaleDateString('en-US', { weekday: 'long' }),
+      main: item.main,
+      weather: item.weather,
+      wind: item.wind,
+      rain: item.rain,
     }));
   }
 
-updateWeatherData(data: any) {
-  this.locationName = data.name || 'Unknown Location';
-  this.temperature = data.main?.temp || null;
-  this.weatherDescription = data.weather?.[0]?.description || '';
-  this.humidity = data.main?.humidity || null;
-  this.windSpeed = data.wind?.speed || null;
-  this.weatherIcon = data.weather?.[0]?.icon
-    ? `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
-    : '';
-
-  if (data.rain && data.rain['1h']) {
-    this.chanceOfRain = `${data.rain['1h']} mm in the last hour`;
-  } else {
-    this.chanceOfRain = 'No rain data available';
+  updateWeatherData(data: any) {
+    this.locationName = data.name || 'Unknown Location';
+    this.temperature = data.main?.temp || null;
+    this.weatherDescription = data.weather?.[0]?.description || '';
+    this.humidity = data.main?.humidity || null;
+    this.windSpeed = data.wind?.speed || null;
+    this.weatherIcon = data.weather?.[0]?.icon
+      ? `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
+      : '';
+  
+    if (data.rain && data.rain['1h']) {
+      this.chanceOfRain = `${data.rain['1h']} mm in the last hour`;
+    } else {
+      this.chanceOfRain = 'No rain data available';
+    }
+  
+    // Fetch the   using the country code
+    if (data.sys?.country) {
+      const countryCode = data.sys.country;
+      this.fetchFlag(countryCode);
+    }
+  
+    // Debugging: Log the updated weather data
+    console.log('Updated weather data:', {
+      locationName: this.locationName,
+      temperature: this.temperature,
+      weatherDescription: this.weatherDescription,
+      humidity: this.humidity,
+      windSpeed: this.windSpeed,
+      weatherIcon: this.weatherIcon,
+      chanceOfRain: this.chanceOfRain,
+    });
+  
+    // Save the current weather data to localStorage
+    localStorage.setItem('currentWeather', JSON.stringify(data));
   }
-
-  // Debugging: Log the updated weather data
-  console.log('Updated weather data:', {
-    locationName: this.locationName,
-    temperature: this.temperature,
-    weatherDescription: this.weatherDescription,
-    humidity: this.humidity,
-    windSpeed: this.windSpeed,
-    weatherIcon: this.weatherIcon,
-    chanceOfRain: this.chanceOfRain,
-  });
-
-  // Save the current weather data to localStorage
-  localStorage.setItem('currentWeather', JSON.stringify(data));
-}
-
   changeTemperatureUnit(unit: string) {
     this.temperatureUnit = unit;
     localStorage.setItem('temperatureUnit', unit);
@@ -432,6 +449,7 @@ getHourlyForecast(data: any[]): any[] {
       return 'temperature-very-hot';
     }
   }
+  //new
 
   loadOfflineWeatherData() {
     const savedWeather = localStorage.getItem('currentWeather');
@@ -475,6 +493,21 @@ getHourlyForecast(data: any[]): any[] {
         this.getWeatherDataByCity(this.cityName);
       }
     }
+  }
+  fetchFlag(countryCode: string) {
+    const url = `https://restcountries.com/v3.1/alpha/${countryCode}`;
+    this.http.get<any>(url).subscribe(
+      (data) => {
+        if (data && data[0]?.flags?.png) {
+          this.flagUrl = data[0].flags.png; // Set the flag URL
+          console.log('Flag URL:', this.flagUrl); // Debugging
+        }
+      },
+      (error) => {
+        console.error('Error fetching flag:', error);
+        this.flagUrl = ''; // Clear the flag URL on error
+      }
+    );
   }
   
   updateCurrentTime() {

@@ -21,6 +21,11 @@
     </ion-button>
   </div>
 
+  <div class="location-info">
+    <h2>{{ locationName }}</h2>
+    <img *ngIf="flagUrl" [src]="flagUrl" alt="Country Flag" class="flag" />
+  </div>
+  
   <!-- Current Weather Details -->
   <div *ngIf="temperature !== null" class="weather-card">
     <h3>Current Weather ({{ currentDate }})</h3>
@@ -56,17 +61,19 @@
   <div class="current-time">
     <p>Current Time: {{ currentTime }}</p>
   </div>
-<div *ngIf="hourlyForecast.length > 0" class="hourly-updates-container">
-  <h3>Hourly Updates</h3>
-  <div class="hourly-updates">
-    <div *ngFor="let hour of hourlyForecast" class="hourly-card">
-      <h4>{{ hour.time }}</h4>
-      <img [src]="hour.icon" alt="Weather Icon">
-      <p><strong>Temp:</strong> {{ hour.temp }}°</p>
-      <p><strong>Condition:</strong> {{ hour.condition }}</p>
+
+  <!-- Hourly Updates -->
+  <div *ngIf="hourlyForecast.length > 0" class="hourly-updates-container">
+    <h3>Hourly Updates</h3>
+    <div class="hourly-updates">
+      <div *ngFor="let hour of hourlyForecast" class="hourly-card">
+        <h4>{{ hour.time }}</h4>
+        <img [src]="hour.icon" alt="Weather Icon">
+        <p><strong>Temp:</strong> {{ hour.temp }}°</p>
+        <p><strong>Condition:</strong> {{ hour.condition }}</p>
+      </div>
     </div>
   </div>
-</div>
 
   <!-- Error Message -->
   <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
@@ -111,4 +118,3 @@
       </div>
     </div>
   </div>
-</ion-content>
